@@ -24,17 +24,16 @@ const randomNumber = (start, stop) => {
 
 const fortune = (ctx, body = null, status = 200) => {
   // Uncomment for delay
-  const delay = randomNumber(1, 10) * 1000;
-  // const delay = 0;
+  // const delay = randomNumber(1, 10) * 1000;
+  const delay = 2 * 1000;
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // Uncomment for error generation
-      if (Math.random() > 0.8) {
-        reject(new Error('Something bad happened'));
-        return;
-      }
-
+      // if (Math.random() > 0.8) {
+      //   reject(new Error('Something bad happened'));
+      //   return;
+      // }
       ctx.response.status = status;
       ctx.response.body = body;
       resolve();
@@ -43,7 +42,9 @@ const fortune = (ctx, body = null, status = 200) => {
 };
 
 const app = new Koa();
-app.use(cors());
+app.use(cors({
+  origin: 'https://antis85.github.io',
+}));
 app.use(
   koaBody({
     json: true,
@@ -131,5 +132,4 @@ app.use(router.allowedMethods());
 
 const port = process.env.PORT || 7070;
 const server = http.createServer(app.callback());
-server.listen(port);
-// server.listen(port, () => console.log('server started @port', port));
+server.listen(port, () => console.log('server started @port', port));
